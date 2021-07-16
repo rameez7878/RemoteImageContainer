@@ -8,24 +8,32 @@
 
 /* Begin PBXBuildFile section */
 		1C0D79AF269F321E00A28748 /* RemoteImageContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C0D79AD269F321E00A28748 /* RemoteImageContainer.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		1CF562A626A058F300861F22 /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CF562A526A058F300861F22 /* UIView+Extensions.swift */; };
 		1CF562A926A05A5A00861F22 /* RemoteImageContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CF562A826A05A5A00861F22 /* RemoteImageContainer.swift */; };
 		1CF562AE26A05D3D00861F22 /* RRUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CF562AD26A05D3D00861F22 /* RRUtility.swift */; };
-		1CF562B226A05F7100861F22 /* RREnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CF562B126A05F7100861F22 /* RREnums.swift */; };
 		1CF562B526A0675E00861F22 /* RRDownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CF562B426A0675E00861F22 /* RRDownloadManager.swift */; };
 		1CF562B726A0676400861F22 /* RRDownload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CF562B626A0676400861F22 /* RRDownload.swift */; };
+		1CF70D8E26A19EE60038F3BE /* RRError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CF70D8C26A19EE60038F3BE /* RRError.swift */; };
+		1CF70D8F26A19EE60038F3BE /* RRLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CF70D8D26A19EE60038F3BE /* RRLogger.swift */; };
+		1CF70D9326A19F060038F3BE /* URL+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CF70D9026A19F060038F3BE /* URL+Extension.swift */; };
+		1CF70D9426A19F060038F3BE /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CF70D9126A19F060038F3BE /* UIColor+Extension.swift */; };
+		1CF70D9526A19F060038F3BE /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CF70D9226A19F060038F3BE /* UIView+Extension.swift */; };
+		1CF70D9726A19F3C0038F3BE /* RRDownloadManagerObserverClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CF70D9626A19F3C0038F3BE /* RRDownloadManagerObserverClient.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		1C0D79AA269F321E00A28748 /* RemoteImageContainer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RemoteImageContainer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1C0D79AD269F321E00A28748 /* RemoteImageContainer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RemoteImageContainer.h; sourceTree = "<group>"; };
 		1C0D79AE269F321E00A28748 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1CF562A526A058F300861F22 /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
 		1CF562A826A05A5A00861F22 /* RemoteImageContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteImageContainer.swift; sourceTree = "<group>"; };
 		1CF562AD26A05D3D00861F22 /* RRUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RRUtility.swift; sourceTree = "<group>"; };
-		1CF562B126A05F7100861F22 /* RREnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RREnums.swift; sourceTree = "<group>"; };
 		1CF562B426A0675E00861F22 /* RRDownloadManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RRDownloadManager.swift; sourceTree = "<group>"; };
 		1CF562B626A0676400861F22 /* RRDownload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RRDownload.swift; sourceTree = "<group>"; };
+		1CF70D8C26A19EE60038F3BE /* RRError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RRError.swift; sourceTree = "<group>"; };
+		1CF70D8D26A19EE60038F3BE /* RRLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RRLogger.swift; sourceTree = "<group>"; };
+		1CF70D9026A19F060038F3BE /* URL+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URL+Extension.swift"; sourceTree = "<group>"; };
+		1CF70D9126A19F060038F3BE /* UIColor+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
+		1CF70D9226A19F060038F3BE /* UIView+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
+		1CF70D9626A19F3C0038F3BE /* RRDownloadManagerObserverClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RRDownloadManagerObserverClient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,7 +79,9 @@
 		1CF562A226A0564800861F22 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				1CF562A526A058F300861F22 /* UIView+Extensions.swift */,
+				1CF70D9126A19F060038F3BE /* UIColor+Extension.swift */,
+				1CF70D9226A19F060038F3BE /* UIView+Extension.swift */,
+				1CF70D9026A19F060038F3BE /* URL+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -87,8 +97,9 @@
 		1CF562AC26A05D3500861F22 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				1CF70D8C26A19EE60038F3BE /* RRError.swift */,
+				1CF70D8D26A19EE60038F3BE /* RRLogger.swift */,
 				1CF562AD26A05D3D00861F22 /* RRUtility.swift */,
-				1CF562B126A05F7100861F22 /* RREnums.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -96,6 +107,7 @@
 		1CF562B326A0675100861F22 /* DownloadManager */ = {
 			isa = PBXGroup;
 			children = (
+				1CF70D9626A19F3C0038F3BE /* RRDownloadManagerObserverClient.swift */,
 				1CF562B426A0675E00861F22 /* RRDownloadManager.swift */,
 				1CF562B626A0676400861F22 /* RRDownload.swift */,
 			);
@@ -181,12 +193,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1CF562A626A058F300861F22 /* UIView+Extensions.swift in Sources */,
+				1CF70D8E26A19EE60038F3BE /* RRError.swift in Sources */,
 				1CF562B526A0675E00861F22 /* RRDownloadManager.swift in Sources */,
+				1CF70D9726A19F3C0038F3BE /* RRDownloadManagerObserverClient.swift in Sources */,
 				1CF562A926A05A5A00861F22 /* RemoteImageContainer.swift in Sources */,
+				1CF70D9526A19F060038F3BE /* UIView+Extension.swift in Sources */,
 				1CF562B726A0676400861F22 /* RRDownload.swift in Sources */,
-				1CF562B226A05F7100861F22 /* RREnums.swift in Sources */,
+				1CF70D8F26A19EE60038F3BE /* RRLogger.swift in Sources */,
+				1CF70D9326A19F060038F3BE /* URL+Extension.swift in Sources */,
 				1CF562AE26A05D3D00861F22 /* RRUtility.swift in Sources */,
+				1CF70D9426A19F060038F3BE /* UIColor+Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
