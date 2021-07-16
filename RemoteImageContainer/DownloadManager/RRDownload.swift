@@ -16,11 +16,10 @@ public class RRDownload {
     public var task: URLSessionDownloadTask?
 
     
-    // MARK:- Initializer
+    // MARK:- Initializers
     public init(url: URL) {
         fromFileURL = url
         toFileURL = RRUtility.getDocumentsDirectoryURL(folder: "Images")?.appendingPathComponent(fromFileURL.getFileNameFromURL())
     }
-    
     
 }
