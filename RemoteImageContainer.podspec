@@ -11,7 +11,8 @@ Pod::Spec.new do |spec|
                                   }
   spec.author                   = { "Rameez Raja" => "rameezgcs333@gmail.com" }
   spec.ios.deployment_target    = "11.0"
-  spec.source                   = { :git => "https://gitlab.com/c9opublicframeworks/c9ocoreframework.git", :tag => "#{spec.version}" }
+  spec.source                   = { :git => "https://github.com/rameez7878/RemoteImageContainer.git", :tag => "#{spec.version}" }
+  spec.source_files             = "RemoteImageContainer", "RemoteImageContainer/Source", "RemoteImageContainer/Extensions", "RemoteImageContainer/Helpers", "RemoteImageContainer/DownloadManager"
   spec.swift_versions           = ['5.0']
 
   spec.dependency                 'ShimmerSwift'

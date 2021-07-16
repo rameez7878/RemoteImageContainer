@@ -8,12 +8,24 @@
 
 /* Begin PBXBuildFile section */
 		1C0D79AF269F321E00A28748 /* RemoteImageContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C0D79AD269F321E00A28748 /* RemoteImageContainer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1CF562A626A058F300861F22 /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CF562A526A058F300861F22 /* UIView+Extensions.swift */; };
+		1CF562A926A05A5A00861F22 /* RemoteImageContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CF562A826A05A5A00861F22 /* RemoteImageContainer.swift */; };
+		1CF562AE26A05D3D00861F22 /* RRUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CF562AD26A05D3D00861F22 /* RRUtility.swift */; };
+		1CF562B226A05F7100861F22 /* RREnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CF562B126A05F7100861F22 /* RREnums.swift */; };
+		1CF562B526A0675E00861F22 /* RRDownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CF562B426A0675E00861F22 /* RRDownloadManager.swift */; };
+		1CF562B726A0676400861F22 /* RRDownload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CF562B626A0676400861F22 /* RRDownload.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		1C0D79AA269F321E00A28748 /* RemoteImageContainer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RemoteImageContainer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1C0D79AD269F321E00A28748 /* RemoteImageContainer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RemoteImageContainer.h; sourceTree = "<group>"; };
 		1C0D79AE269F321E00A28748 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1CF562A526A058F300861F22 /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
+		1CF562A826A05A5A00861F22 /* RemoteImageContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteImageContainer.swift; sourceTree = "<group>"; };
+		1CF562AD26A05D3D00861F22 /* RRUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RRUtility.swift; sourceTree = "<group>"; };
+		1CF562B126A05F7100861F22 /* RREnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RREnums.swift; sourceTree = "<group>"; };
+		1CF562B426A0675E00861F22 /* RRDownloadManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RRDownloadManager.swift; sourceTree = "<group>"; };
+		1CF562B626A0676400861F22 /* RRDownload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RRDownload.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,10 +58,48 @@
 		1C0D79AC269F321E00A28748 /* RemoteImageContainer */ = {
 			isa = PBXGroup;
 			children = (
+				1CF562B326A0675100861F22 /* DownloadManager */,
+				1CF562AC26A05D3500861F22 /* Helpers */,
+				1CF562A726A05A4900861F22 /* Source */,
+				1CF562A226A0564800861F22 /* Extensions */,
 				1C0D79AD269F321E00A28748 /* RemoteImageContainer.h */,
 				1C0D79AE269F321E00A28748 /* Info.plist */,
 			);
 			path = RemoteImageContainer;
+			sourceTree = "<group>";
+		};
+		1CF562A226A0564800861F22 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				1CF562A526A058F300861F22 /* UIView+Extensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		1CF562A726A05A4900861F22 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				1CF562A826A05A5A00861F22 /* RemoteImageContainer.swift */,
+			);
+			path = Source;
+			sourceTree = "<group>";
+		};
+		1CF562AC26A05D3500861F22 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				1CF562AD26A05D3D00861F22 /* RRUtility.swift */,
+				1CF562B126A05F7100861F22 /* RREnums.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		1CF562B326A0675100861F22 /* DownloadManager */ = {
+			isa = PBXGroup;
+			children = (
+				1CF562B426A0675E00861F22 /* RRDownloadManager.swift */,
+				1CF562B626A0676400861F22 /* RRDownload.swift */,
+			);
+			path = DownloadManager;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -94,6 +144,7 @@
 				TargetAttributes = {
 					1C0D79A9269F321E00A28748 = {
 						CreatedOnToolsVersion = 12.5;
+						LastSwiftMigration = 1250;
 					};
 				};
 			};
@@ -130,6 +181,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1CF562A626A058F300861F22 /* UIView+Extensions.swift in Sources */,
+				1CF562B526A0675E00861F22 /* RRDownloadManager.swift in Sources */,
+				1CF562A926A05A5A00861F22 /* RemoteImageContainer.swift in Sources */,
+				1CF562B726A0676400861F22 /* RRDownload.swift in Sources */,
+				1CF562B226A05F7100861F22 /* RREnums.swift in Sources */,
+				1CF562AE26A05D3D00861F22 /* RRUtility.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -261,6 +318,7 @@
 		1C0D79B3269F321E00A28748 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -278,6 +336,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -286,6 +345,7 @@
 		1C0D79B4269F321E00A28748 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
