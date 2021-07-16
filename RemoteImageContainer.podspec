@@ -1,7 +1,7 @@
 Pod::Spec.new do |spec|
 
   spec.name                     = "RemoteImageContainer"
-  spec.version                  = "0.0.1"
+  spec.version                  = "1.0.0"
   spec.summary                  = "RemoteImageContainer loads the remote image and cache it for best user experience."
   spec.description              = "RemoteImageContainer loads the image from remote in an efficient way. It provides the customized activity indicator while loading image and once image loaded, it will cache that image for future efficiency in application."
   spec.homepage                 = "https://github.com/rameez7878"
