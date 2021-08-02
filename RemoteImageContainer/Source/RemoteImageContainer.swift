@@ -57,34 +57,28 @@ public class RemoteImageContainer: UIView {
     }
         
     private func refreshImageView() {
-                
+
+        showActivityIndicator()
         guard let url = url else {
-            showActivityIndicator()
             return
         }
         
-        RRDownloadManager.shared().downloadExistsFor(url: url) { (isImageExists, imageURL, error) in
+        RRDownloadManager.shared().fileExists(for: url, type: .image) { localFileURL in
             
-            if let isImageExists = isImageExists {
+            if let localFileURL = localFileURL {
                 
-                if isImageExists {
-                    
-                    self.hideActivityIndicator()
-                    self.imageView.image = UIImage(contentsOfFile: imageURL!.path)
-                    
-                } else {
-                    
-                    RRDownloadManager.shared().addDownloadOperation(url: url) { (downloadError) in
-                        if let downloadError = downloadError {
-                            RRLogger.log(type: RemoteImageContainer.self, message: downloadError.message)
-                        }
+                self.hideActivityIndicator()
+                self.imageView.image = UIImage(contentsOfFile: localFileURL.path)
+
+            } else {
+                
+                self.showActivityIndicator()
+                RRDownloadManager.shared().download(url: url, type: .image) { error in
+                    if let error = error {
+                        RRLogger.log(type: RemoteImageContainer.self, message: error.message)
                     }
-                    self.showActivityIndicator()
-                    
                 }
                 
-            } else {
-                RRLogger.log(type: RemoteImageContainer.self, message: error!.message)
             }
             
         }
@@ -142,12 +136,29 @@ public class RemoteImageContainer: UIView {
 // MARK:- RRDownloadManagerObserver
 extension RemoteImageContainer: RRDownloadManagerObserver {
     
-    public func didFinishedDownload(url: URL) {
-
+    public func rrDownloadManager(didStartDownloadingFor url: URL) {
         if url == self.url {
-            refreshImageView()
+            RRLogger.log(type: RemoteImageContainer.self, message: "Downloading started for URL: `\(url.absoluteString)`")
         }
-
     }
     
+    public func rrDownloadManager(didWriteDataWith progress: Float, for url: URL) {
+        if url == self.url {
+            RRLogger.log(type: RemoteImageContainer.self, message: "Downloading progress: '\(progress * 100)%' for URL: `\(url.absoluteString)`")
+        }
+    }
+    
+    public func rrDownloadManager(didFinishDownloadingFor url: URL, to location: URL) {
+        if url == self.url {
+            refreshImageView()
+            RRLogger.log(type: RemoteImageContainer.self, message: "Downloading finished for URL: `\(url.absoluteString)`")
+        }
+    }
+    
+    public func rrDownloadManager(didFinishDownloadingFor url: URL, with error: RRError) {
+        if url == self.url {
+            RRLogger.log(type: RemoteImageContainer.self, message: "Downloading finished with error: `\(error.message)` for URL: \(url.absoluteString)")
+        }
+    }
+        
 }

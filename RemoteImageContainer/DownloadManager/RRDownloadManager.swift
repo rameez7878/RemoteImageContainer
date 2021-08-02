@@ -16,8 +16,7 @@ public class RRDownloadManager: NSObject {
 
     // MARK:- Properties
     private lazy var downloadsSession: URLSession = {
-        let configuration = URLSessionConfiguration.background(withIdentifier: "bgSessionConfiguration")
-        configuration.requestCachePolicy = .reloadIgnoringLocalCacheData
+        let configuration = URLSessionConfiguration.default
         return URLSession(configuration: configuration, delegate: self, delegateQueue: nil)
     }()
     private var activeDownloads: [URL: RRDownload] = [:]
@@ -32,7 +31,7 @@ public class RRDownloadManager: NSObject {
     public static func shared() -> RRDownloadManager {
         instance
     }
-    
+     
     public func addObserver(observer: RRDownloadManagerObserver) -> RRDownloadManagerObserverClient {
         
         var client = RRDownloadManagerObserverClient(observer: observer)
@@ -46,70 +45,46 @@ public class RRDownloadManager: NSObject {
         observers.removeAll(where: { $0.id == client.id })
     }
     
-    public func downloadExistsFor(url: URL, completion: @escaping (_ isImageExists: Bool?, _ imageURL: URL?, _ error: RRError?) -> Void) {
-        
-        RRUtility.checkImageInCache(url: url) { (isImageExists, imageURL, error) in
-            completion(isImageExists, imageURL, error)
-        }
-
+    public func fileExists(for url: URL, type: RRFileType, completion: FileExistsCompletion) {
+        RRUtility.checkFileInCache(url: url, type: type, completion: completion)
     }
     
-    public func addDownloadOperation(url: URL, completion: @escaping (_ error: RRError?) -> Void) {
+    public func download(url: URL, type: RRFileType, completion: DownloadStartCompletion) {
         
-        let download = RRDownload(url: url)
+        let download = RRDownload(url: url, type: type)
         
-        if activeDownloads.keys.contains(download.fromFileURL) {
-            completion(nil)
-            return
+        if download.toFileURL == nil {
+            completion(RRError(location: RRDownloadManager.self, message: .unExpectedResult))
         } else {
-            activeDownloads[download.fromFileURL] = download
-        }
-        
-        RRLogger.log(type: RRDownloadManager.self, message: "Image Downloading Started", additionalInfo: download.fromFileURL.absoluteString)
-        
-        download.task = downloadsSession.downloadTask(with: download.fromFileURL)
-        download.task?.resume()
+            
+            if !activeDownloads.keys.contains(download.fromFileURL) {
+                                    
+                activeDownloads[download.fromFileURL] = download
+                
+                download.task = self.downloadsSession.downloadTask(with: url)
+                download.task?.resume()
 
-    }
-            
-    public func cancelAllDownloads(completion: @escaping (_ error: RRError?) -> Void) {
-        
-        if activeDownloads.count > 0 {
-            
-            activeDownloads.forEach { (url, download) in
-                download.task?.cancel()
-            }
-            activeDownloads.removeAll()
-            
-            completion(nil)
-            
-        } else {
-            completion(nil)
-        }
-
-    }
-        
-    private func saveImageIntoDocumentsDirectory(data: Data?, download: RRDownload) {
-        
-        guard let data = data else {
-            return
-        }
-            
-        do {
-            
-            RRLogger.log(type: RRDownloadManager.self, message: "Image Downloading Finished", additionalInfo: download.fromFileURL.absoluteString)
-            try data.write(to: download.toFileURL!)
-            
-            DispatchQueue.main.async {
-                self.observers.forEach { (client) in
-                    client.observer?.didFinishedDownload(url: download.fromFileURL)
+                observers.forEach { client in
+                    client.observer?.rrDownloadManager(didStartDownloadingFor: url)
                 }
-            }
 
-        } catch {
-            RRLogger.log(type: RRDownloadManager.self, message: "Could not save image", additionalInfo: error.localizedDescription)
+            }
+            
+            completion(nil)
+
         }
         
+    }
+    
+    public func cancelAllDownloads(completion: DownloadsCancelledCompletion = nil) {
+        
+        activeDownloads.forEach { (_, download) in
+            download.task?.cancel()
+        }
+        activeDownloads.removeAll()
+        
+        completion?()
+
     }
     
 }
@@ -121,27 +96,50 @@ extension RRDownloadManager: URLSessionDelegate, URLSessionDownloadDelegate {
     public func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
         
         guard let sourceURL = downloadTask.originalRequest?.url else { return }
+        guard let activeDownload = activeDownloads.first(where: { $0.value.fromFileURL == sourceURL }) else { return }
+            
+        let download = activeDownload.value
+        activeDownloads.removeValue(forKey: download.fromFileURL)
         
-        if let activeDownload = activeDownloads.first(where: { $0.value.fromFileURL == sourceURL }) {
+        do {
             
-            activeDownloads.removeValue(forKey: activeDownload.key)
+            let downloadedData = try Data(contentsOf: location)
+            try downloadedData.write(to: download.toFileURL!)
             
-            var downloadedData: Data?
-            
-            do {
-                try downloadedData = Data(contentsOf: location)
-            } catch {
-                RRLogger.log(type: RRDownloadManager.self, message: "Downloaded image is courrpted", additionalInfo: error.localizedDescription)
-                return
+            DispatchQueue.main.async {
+                self.observers.forEach { client in
+                    client.observer?.rrDownloadManager(didFinishDownloadingFor: download.fromFileURL, to: download.toFileURL!)
+                }
             }
             
-            let download = activeDownload.value
-            saveImageIntoDocumentsDirectory(data: downloadedData, download: download)
-
+        } catch {
+            
+            DispatchQueue.main.async {
+                self.observers.forEach { client in
+                    client.observer?.rrDownloadManager(didFinishDownloadingFor: download.fromFileURL, with: RRError(location: RRDownloadManager.self, message: "Downloaded file is courrpted \(error.localizedDescription)"))
+                }
+            }
+            
         }
         
     }
         
+    public func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
+
+        guard let sourceURL = downloadTask.originalRequest?.url else { return }
+        guard let activeDownload = activeDownloads.first(where: { $0.value.fromFileURL == sourceURL }) else { return }
+        
+        let download = activeDownload.value
+        let progress = Float(totalBytesWritten) / Float(totalBytesExpectedToWrite)
+        
+        DispatchQueue.main.async {
+            self.observers.forEach { client in
+                client.observer?.rrDownloadManager(didWriteDataWith: progress, for: download.fromFileURL)
+            }
+        }
+        
+    }
+    
     public func urlSession(_ session: URLSession, taskIsWaitingForConnectivity task: URLSessionTask) {
         RRLogger.log(type: RRDownloadManager.self, message: "Waiting for connectivity...")
     }

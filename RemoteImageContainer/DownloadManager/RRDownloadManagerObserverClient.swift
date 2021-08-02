@@ -19,5 +19,8 @@ public struct RRDownloadManagerObserverClient {
 }
 
 public protocol RRDownloadManagerObserver: AnyObject {
-    func didFinishedDownload(url: URL)
+    func rrDownloadManager(didStartDownloadingFor url: URL)
+    func rrDownloadManager(didWriteDataWith progress: Float, for url: URL)
+    func rrDownloadManager(didFinishDownloadingFor url: URL, to location: URL)
+    func rrDownloadManager(didFinishDownloadingFor url: URL, with error: RRError)
 }

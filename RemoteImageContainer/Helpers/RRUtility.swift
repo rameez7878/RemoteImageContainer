@@ -28,17 +28,15 @@ public class RRUtility: NSObject {
         
     }
     
-    static func checkImageInCache(url: URL, completion: (_ isImageExists: Bool?, _ imageURL: URL?, _ error: RRError?) -> Void) {
+    static func checkFileInCache(url: URL, type: RRFileType, completion: FileExistsCompletion) {
         
-        let imagesDirectoryURL = getDocumentsDirectoryURL(folder: "Images")
-        if let imageFileURL = imagesDirectoryURL?.appendingPathComponent(url.getFileNameFromURL()) {
-            if FileManager.default.fileExists(atPath: imageFileURL.path) {
-                completion(true, imageFileURL, nil)
+        let fileDirectoryURL = getDocumentsDirectoryURL(folder: type.rawValue)
+        if let fileURL = fileDirectoryURL?.appendingPathComponent(url.getFileNameFromURL()) {
+            if FileManager.default.fileExists(atPath: fileURL.path) {
+                completion(fileURL)
             } else {
-                completion(false, nil, nil)
+                completion(nil)
             }
-        } else {
-            completion(nil, nil, RRError(location: RRUtility.self, message: .anyError))
         }
 
     }
