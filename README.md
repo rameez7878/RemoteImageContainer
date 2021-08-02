@@ -43,8 +43,8 @@ imageContainerView.setImage(url: URL, overLay: Bool, overLayWithOpacity: CGFloat
 - `overLay` To add black overLay above the image. By default, its value is false.
 - `overLayWithOpacity` To set the opacity of black overLay. Bye default, its value is 0.4.
 
-### Download Image/Audio
-RemoteImageContainer provides a method for downloading media i.e. image, audio. To download any media:
+### Download Media
+RemoteImageContainer provides a method for downloading media i.e. image, audio, file, video etc. To download any media:
 
 1. Import following in your desired swift file.
 
@@ -54,9 +54,16 @@ import RemoteImageContainer
 
 2. Send request for download using following method:
 ```swift
-RRDownloadManager.shared().addDownloadOperation(url: URL) { (error) in
+RRDownloadManager.shared().download(url: URL, type: RRFileType) { (error) in
 }
 ```
+
+You can also check if a file already exists or not before proceeding for downloading:
+```swift
+RRDownloadManager.shared().fileExists(url: URL, type: RRFileType) { (localFileURL) in
+}
+```
+
 
 ## Observers
 ### Subscribe
@@ -68,7 +75,16 @@ After subscribing for observer, you can listen for following delegate functions:
 ```swift
 extension ViewController: RRDownloadManagerObserver {
         
-    func didFinishedDownload(url: URL) {
+    public func rrDownloadManager(didStartDownloadingFor url: URL) {
+    }
+    
+    public func rrDownloadManager(didWriteDataWith progress: Float, for url: URL) {
+    }
+    
+    public func rrDownloadManager(didFinishDownloadingFor url: URL, to location: URL) {
+    }
+    
+    public func rrDownloadManager(didFinishDownloadingFor url: URL, with error: RRError) {
     }
 
 }
